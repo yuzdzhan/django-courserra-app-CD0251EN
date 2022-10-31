@@ -1,0 +1,53 @@
+
+3
+Task: To create a submission view to submit the choice selections
+
+Since you have created several new models, you need to import them at the top of the views.py, such as from .models import Course, Enrollment, Question, Choice, Submission
+
+    Create a submit view def submit(request, course_id): to create an exam submission record for a course enrollment, you may implement it based on following logic:
+        Get the current user and the course object, then get the associated the enrollment object (HINT: Enrollment.objects.get(user=..., course=...))
+        Create a new submission object referring to the enrollment (HINT: Submission.objects.create(enrollment=...))
+        Collect the selected choices from HTTP request object (HINT: you could use request.POST to get the payload dictionary, and get the choice id from the dictionary values, an example code snippet is also provided)
+        Add each selected choice object to the submission object
+        Redirect to a show_exam_result view with the submission id to show the exam result
+        Configure urls.py to route the new submit view such as path('<int:course_id>/submit/', ...),
+
+
+4
+
+Task: To create a submission evaluation view
+
+    Create an exam result view 
+    
+    def show_exam_result(request, course_id, submission_id): 
+    
+    to check if the learner passed exam as well as their question results. You may implement the view based on the following logic:
+        Get the course object and submission object based on their ids in view arguments
+        Get the selected choice ids from the submission record
+        For each selected choice, check if it is a correct answer or not
+        Calculate the total score by adding up the grades for all questions in the course
+        Add the course, selected_ids, and grade to context for rendering HTML page
+        Configure urls.py to route the new show_exam_result view 
+        such as path('course/<int:course_id>/submission/<int:submission_id>/result/', ...),
+
+
+5.
+
+Task: To complete the exam result template to show the result of the submission
+
+    If a learner failed the exam, he/she should be shown with the final score with the
+     incorrect choices. The learner should be allowed to re-take the exam and submit again.
+     https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-CD0251EN-SkillsNetwork/labs/m6_final/images/exam_failed.png
+
+
+    If a learner passed the exam, he/she should be shown with the final score, as well as a congratulations. 
+    
+    https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-CD0251EN-SkillsNetwork/labs/m6_final/images/exam_passed.png
+
+    Complete the HTML template exam_result_bootstrap.html for submission result which should show if a learner passed the exam with details like total score, result for each question, etc. Check the previous UI design for more details.
+
+    Stylize the updated template with Bootstrap to meet the UI design from design team
+
+
+
+    
